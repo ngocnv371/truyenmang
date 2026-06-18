@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_dynamic_zone_books",
+  "info": {
+    "displayName": "books",
+    "icon": "book"
+  },
+  "options": {},
+  "attributes": {
+    "books": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::book.book"
+    }
+  },
+  "config": {}
+}

@@ -1,0 +1,28 @@
+{
+  "kind": "singleType",
+  "collectionName": "books_pages",
+  "info": {
+    "singularName": "books-page",
+    "pluralName": "books-pages",
+    "displayName": "/books"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "heading": {
+      "type": "string",
+      "required": true
+    },
+    "sub_heading": {
+      "type": "string"
+    },
+    "books": {
+      "type": "dynamiczone",
+      "components": [
+        "dynamic-zone.books"
+      ]
+    }
+  }
+}

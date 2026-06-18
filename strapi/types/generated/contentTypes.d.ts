@@ -668,6 +668,36 @@ export interface ApiBookBook extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiBooksPageBooksPage extends Struct.SingleTypeSchema {
+  collectionName: 'books_pages';
+  info: {
+    displayName: '/books';
+    pluralName: 'books-pages';
+    singularName: 'books-page';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    books: Schema.Attribute.DynamicZone<['dynamic-zone.books']>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    heading: Schema.Attribute.String & Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::books-page.books-page'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    sub_heading: Schema.Attribute.String;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiCategoryCategory extends Struct.CollectionTypeSchema {
   collectionName: 'categories';
   info: {
@@ -766,6 +796,7 @@ export interface ApiChapterChapter extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     order: Schema.Attribute.Integer & Schema.Attribute.Required;
     publishedAt: Schema.Attribute.DateTime;
+    slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
     title: Schema.Attribute.String & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -1837,6 +1868,7 @@ declare module '@strapi/strapi' {
       'api::blog-page.blog-page': ApiBlogPageBlogPage;
       'api::book-comment.book-comment': ApiBookCommentBookComment;
       'api::book.book': ApiBookBook;
+      'api::books-page.books-page': ApiBooksPageBooksPage;
       'api::category.category': ApiCategoryCategory;
       'api::chapter-comment.chapter-comment': ApiChapterCommentChapterComment;
       'api::chapter.chapter': ApiChapterChapter;

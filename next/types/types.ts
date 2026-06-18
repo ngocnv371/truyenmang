@@ -54,3 +54,30 @@ export type LocaleSlugParamsProps = {
     locale: string;
   }>;
 };
+
+export interface Genre {
+  id: number;
+  name: string;
+}
+
+export interface Book {
+  id: number;
+  title: string;
+  slug: string;
+  synopsis: string;
+  description?: string;
+  cover: Image;
+  genres: Genre[];
+  rating?: number;
+  author: string;
+  views?: number;
+  status: 'ongoing' | 'completed' | 'hiatus' | 'cancelled';
+  chapters?: any[];
+  dynamic_zone: any[];
+  seo?: any;
+  localizations: StrapiLocaleObject[];
+  locale: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+}
