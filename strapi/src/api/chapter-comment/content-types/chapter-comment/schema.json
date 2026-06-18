@@ -1,0 +1,25 @@
+{
+  "kind": "collectionType",
+  "collectionName": "chapter_comments",
+  "info": {
+    "singularName": "chapter-comment",
+    "pluralName": "chapter-comments",
+    "displayName": "Chapter Comments"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "content": {
+      "type": "text",
+      "required": true
+    },
+    "chapter": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::chapter.chapter",
+      "inversedBy": "comments"
+    }
+  }
+}

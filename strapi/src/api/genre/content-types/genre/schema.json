@@ -1,0 +1,19 @@
+{
+  "kind": "collectionType",
+  "collectionName": "genres",
+  "info": {
+    "singularName": "genre",
+    "pluralName": "genres",
+    "displayName": "Genres"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    }
+  }
+}

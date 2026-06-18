@@ -1,0 +1,25 @@
+{
+  "kind": "collectionType",
+  "collectionName": "book_comments",
+  "info": {
+    "singularName": "book-comment",
+    "pluralName": "book-comments",
+    "displayName": "Book Comments"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "content": {
+      "type": "text",
+      "required": true
+    },
+    "book": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::book.book",
+      "inversedBy": "comments"
+    }
+  }
+}

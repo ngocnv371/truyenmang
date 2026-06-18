@@ -592,6 +592,82 @@ export interface ApiBlogPageBlogPage extends Struct.SingleTypeSchema {
   };
 }
 
+export interface ApiBookCommentBookComment extends Struct.CollectionTypeSchema {
+  collectionName: 'book_comments';
+  info: {
+    displayName: 'Book Comments';
+    pluralName: 'book-comments';
+    singularName: 'book-comment';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    book: Schema.Attribute.Relation<'manyToOne', 'api::book.book'>;
+    content: Schema.Attribute.Text & Schema.Attribute.Required;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::book-comment.book-comment'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiBookBook extends Struct.CollectionTypeSchema {
+  collectionName: 'books';
+  info: {
+    displayName: 'Book';
+    pluralName: 'books';
+    singularName: 'book';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    book_status: Schema.Attribute.Enumeration<
+      ['ongoing', 'completed', 'hiatus', 'cancelled']
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'ongoing'>;
+    chapters: Schema.Attribute.Relation<'oneToMany', 'api::chapter.chapter'>;
+    comments: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::book-comment.book-comment'
+    >;
+    cover: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.Text;
+    genres: Schema.Attribute.Relation<'oneToMany', 'api::genre.genre'>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::book.book'> &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    seo: Schema.Attribute.Component<'shared.seo', false>;
+    slug: Schema.Attribute.UID<'title'> &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    sypnopsis: Schema.Attribute.Text;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiCategoryCategory extends Struct.CollectionTypeSchema {
   collectionName: 'categories';
   info: {
@@ -626,6 +702,71 @@ export interface ApiCategoryCategory extends Struct.CollectionTypeSchema {
       }>;
     product: Schema.Attribute.Relation<'manyToOne', 'api::product.product'>;
     publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiChapterCommentChapterComment
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'chapter_comments';
+  info: {
+    displayName: 'Chapter Comments';
+    pluralName: 'chapter-comments';
+    singularName: 'chapter-comment';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    chapter: Schema.Attribute.Relation<'manyToOne', 'api::chapter.chapter'>;
+    content: Schema.Attribute.Text & Schema.Attribute.Required;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::chapter-comment.chapter-comment'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiChapterChapter extends Struct.CollectionTypeSchema {
+  collectionName: 'chapters';
+  info: {
+    displayName: 'Chapters';
+    pluralName: 'chapters';
+    singularName: 'chapter';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    book: Schema.Attribute.Relation<'manyToOne', 'api::book.book'>;
+    comments: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::chapter-comment.chapter-comment'
+    >;
+    content: Schema.Attribute.Text & Schema.Attribute.Required;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::chapter.chapter'
+    > &
+      Schema.Attribute.Private;
+    order: Schema.Attribute.Integer & Schema.Attribute.Required;
+    publishedAt: Schema.Attribute.DateTime;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -667,6 +808,31 @@ export interface ApiFaqFaq extends Struct.CollectionTypeSchema {
           localized: true;
         };
       }>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiGenreGenre extends Struct.CollectionTypeSchema {
+  collectionName: 'genres';
+  info: {
+    displayName: 'Genres';
+    pluralName: 'genres';
+    singularName: 'genre';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::genre.genre'> &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1669,8 +1835,13 @@ declare module '@strapi/strapi' {
       'admin::user': AdminUser;
       'api::article.article': ApiArticleArticle;
       'api::blog-page.blog-page': ApiBlogPageBlogPage;
+      'api::book-comment.book-comment': ApiBookCommentBookComment;
+      'api::book.book': ApiBookBook;
       'api::category.category': ApiCategoryCategory;
+      'api::chapter-comment.chapter-comment': ApiChapterCommentChapterComment;
+      'api::chapter.chapter': ApiChapterChapter;
       'api::faq.faq': ApiFaqFaq;
+      'api::genre.genre': ApiGenreGenre;
       'api::global.global': ApiGlobalGlobal;
       'api::logo.logo': ApiLogoLogo;
       'api::page.page': ApiPagePage;
