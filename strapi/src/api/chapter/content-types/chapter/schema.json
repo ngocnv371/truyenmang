@@ -39,6 +39,12 @@
       "relation": "oneToMany",
       "target": "api::chapter-comment.chapter-comment",
       "mappedBy": "chapter"
+    },
+    "author": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "chapters"
     }
   }
 }

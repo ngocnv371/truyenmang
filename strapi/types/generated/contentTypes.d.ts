@@ -632,6 +632,10 @@ export interface ApiBookBook extends Struct.CollectionTypeSchema {
     draftAndPublish: false;
   };
   attributes: {
+    author: Schema.Attribute.Relation<
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
     book_status: Schema.Attribute.Enumeration<
       ['ongoing', 'completed', 'hiatus', 'cancelled']
     > &
@@ -779,6 +783,10 @@ export interface ApiChapterChapter extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
+    author: Schema.Attribute.Relation<
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
     book: Schema.Attribute.Relation<'manyToOne', 'api::book.book'>;
     comments: Schema.Attribute.Relation<
       'oneToMany',
@@ -1809,10 +1817,11 @@ export interface PluginUsersPermissionsUser
   };
   options: {
     draftAndPublish: false;
-    timestamps: true;
   };
   attributes: {
     blocked: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    books: Schema.Attribute.Relation<'oneToMany', 'api::book.book'>;
+    chapters: Schema.Attribute.Relation<'oneToMany', 'api::chapter.chapter'>;
     confirmationToken: Schema.Attribute.String & Schema.Attribute.Private;
     confirmed: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     createdAt: Schema.Attribute.DateTime;

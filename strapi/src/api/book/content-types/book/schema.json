@@ -73,6 +73,12 @@
       "relation": "oneToMany",
       "target": "api::book-comment.book-comment",
       "mappedBy": "book"
+    },
+    "author": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "books"
     }
   }
 }
