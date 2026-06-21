@@ -18,6 +18,12 @@ function getLocale(request: NextRequest): string | undefined {
 
 export function proxy(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
+
+  // Skip locale redirect for API routes (including next-auth)
+  if (pathname.startsWith('/api/')) {
+    return;
+  }
+
   const pathnameIsMissingLocale = i18n.locales.every(
     (locale) => !pathname.startsWith(`/${locale}/`) && pathname !== `/${locale}`
   );

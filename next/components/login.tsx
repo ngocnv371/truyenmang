@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { usePathname } from 'next/navigation';
 import {
   IconBrandGithubFilled,
@@ -14,6 +15,7 @@ import { Button } from './elements/button';
 import { Logo } from './logo';
 
 export const Login = () => {
+  const router = useRouter();
   const { login: loginUser, loading, error, clearError } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -24,7 +26,7 @@ export const Login = () => {
     e.preventDefault();
     try {
       await loginUser(email, password);
-      window.location.href = '/';
+      router.push('/');
     } catch {
       // error is handled by context
     }
@@ -50,6 +52,7 @@ export const Login = () => {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
+          autoComplete="email"
           className="h-10 pl-4 w-full mb-4 rounded-md text-sm bg-charcoal border border-neutral-800 text-white placeholder-neutral-500 outline-none focus:outline-none active:outline-none focus:ring-2 focus:ring-neutral-800"
         />
         <input
@@ -58,6 +61,7 @@ export const Login = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
+          autoComplete="current-password"
           className="h-10 pl-4 w-full mb-4 rounded-md text-sm bg-charcoal border border-neutral-800 text-white placeholder-neutral-500 outline-none focus:outline-none active:outline-none focus:ring-2 focus:ring-neutral-800"
         />
         <Button variant="muted" type="submit" className="w-full py-3" disabled={loading}>

@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { usePathname } from 'next/navigation';
 import {
   IconBrandGithubFilled,
@@ -14,6 +15,7 @@ import { Button } from './elements/button';
 import { Logo } from './logo';
 
 export const Register = () => {
+  const router = useRouter();
   const { register: registerUser, loading, error, clearError } = useAuth();
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
@@ -25,7 +27,7 @@ export const Register = () => {
     e.preventDefault();
     try {
       await registerUser(username, email, password);
-      window.location.href = '/';
+      router.push('/');
     } catch {
       // error is handled by context
     }
