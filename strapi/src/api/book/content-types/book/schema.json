@@ -22,15 +22,10 @@
     },
     "slug": {
       "type": "uid",
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      },
       "targetField": "title",
       "required": true
     },
-    "sypnopsis": {
+    "synopsis": {
       "type": "text"
     },
     "description": {

@@ -7,14 +7,10 @@ export default (config: any, { strapi }: any) => {
     ctx.query = ctx.query || {};
 
     const populate = {
+      // TODO: populate only the thumbnail of the cover image
       cover: true,
       genres: {
         fields: ["id", "name", "slug"],
-      },
-      chapters: {
-        fields: ["id", "title", "slug", "publishedAt"],
-        sort: ["publishedAt:desc"],
-        limit: 10,
       },
       seo: {
         populate: {

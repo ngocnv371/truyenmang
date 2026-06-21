@@ -14,6 +14,11 @@
     "name": {
       "type": "string",
       "required": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "name",
+      "required": true
     }
   }
 }

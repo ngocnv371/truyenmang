@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 
 import ClientSlugHandler from '../../ClientSlugHandler';
 import { Container } from '@/components/container';
+import { ChaptersTable } from '@/components/chapters-table';
 import DynamicZoneManager from '@/components/dynamic-zone/manager';
 import { Badge } from '@/components/ui/badge';
 import { generateMetadataObject } from '@/lib/shared/metadata';
@@ -21,6 +22,9 @@ export async function generateMetadata({
       },
     },
     locale,
+    populate: {
+      seo: true,
+    },
   });
 
   if (!book) {
@@ -31,6 +35,12 @@ export async function generateMetadata({
 
   const seo = book.seo;
   const metadata = generateMetadataObject(seo);
+  
+  // Set book title as page title if metaTitle is not provided
+  if (!seo?.metaTitle) {
+    metadata.title = book.title;
+  }
+  
   return metadata;
 }
 
@@ -41,10 +51,19 @@ const statusColors = {
   cancelled: 'bg-red-100 text-red-800',
 };
 
+interface BookDetailPageProps extends LocaleSlugParamsProps {
+  searchParams: Promise<{
+    page?: string;
+    sort?: 'asc' | 'desc';
+  }>;
+}
+
 export default async function BookDetailPage({
   params,
-}: LocaleSlugParamsProps) {
+  searchParams,
+}: BookDetailPageProps) {
   const { slug, locale } = await params;
+  const { page = '1', sort = 'asc' } = await searchParams;
 
   const [book] = await fetchCollectionType<Book[]>('books', {
     filters: {
@@ -53,6 +72,13 @@ export default async function BookDetailPage({
       },
     },
     locale,
+    populate: {
+      cover: true,
+      genres: true,
+      dynamic_zone: true,
+      seo: true,
+      localizations: true,
+    },
   });
 
   if (!book) {
@@ -203,14 +229,19 @@ export default async function BookDetailPage({
               </div>
             )}
 
-            {/* Chapters Info */}
-            {book.chapters && book.chapters.length > 0 && (
-              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-8">
-                <p className="text-blue-900 font-semibold">
-                  📚 {book.chapters.length} Chapters Available
-                </p>
-              </div>
-            )}
+            {/* Chapters Section */}
+            <div className="mb-8">
+              <h3 className="text-sm font-semibold text-neutral-600 uppercase tracking-wide mb-4">
+                Chapters
+              </h3>
+              <ChaptersTable
+                bookId={book.id}
+                bookSlug={slug}
+                locale={locale}
+                page={parseInt(page, 10)}
+                sort={sort as 'asc' | 'desc'}
+              />
+            </div>
           </div>
         </div>
 
