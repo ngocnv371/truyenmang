@@ -113,6 +113,14 @@ export const MobileNavbar = ({
           <div className="flex flex-row w-full items-start gap-2.5  px-8 py-4 ">
             {user ? (
               <>
+                <Link
+                  href={`/${locale}/studio`}
+                  onClick={() => setOpen(false)}
+                  className="relative max-w-[15rem] text-left text-2xl"
+                  suppressHydrationWarning
+                >
+                  <span className="block text-white">Studio</span>
+                </Link>
                 <span className="text-sm text-white px-4">{user.email}</span>
                 <Button variant="muted" onClick={() => logout()}>
                   <span className="text-sm">Logout</span>
@@ -120,11 +128,7 @@ export const MobileNavbar = ({
               </>
             ) : (
               <>
-                <Button
-                  variant="primary"
-                  as={Link}
-                  href={`/${locale}/sign-in`}
-                >
+                <Button variant="primary" as={Link} href={`/${locale}/sign-in`}>
                   Sign in
                 </Button>
               </>

@@ -1,8 +1,17 @@
 'use client';
 
-import React, { createContext, useContext, useCallback, ReactNode } from 'react';
 import { SessionProvider } from 'next-auth/react';
-import { useSession, signIn as nextAuthSignIn, signOut as nextAuthSignOut } from 'next-auth/react';
+import {
+  signIn as nextAuthSignIn,
+  signOut as nextAuthSignOut,
+  useSession,
+} from 'next-auth/react';
+import React, {
+  ReactNode,
+  createContext,
+  useCallback,
+  useContext,
+} from 'react';
 
 interface StrapiUser {
   id: number;
@@ -17,7 +26,11 @@ interface AuthContextType {
   loading: boolean;
   error: string | null;
   login: (email: string, password: string) => Promise<void>;
-  register: (username: string, email: string, password: string) => Promise<void>;
+  register: (
+    username: string,
+    email: string,
+    password: string
+  ) => Promise<void>;
   logout: () => void;
   clearError: () => void;
 }
@@ -35,39 +48,49 @@ export const useAuth = () => {
 const AuthWrapper: React.FC<{ children: ReactNode }> = ({ children }) => {
   const { data: session, status } = useSession();
 
-  const user = session?.user ? {
-    id: Number((session.user as any).id) || 0,
-    username: session.user.name || '',
-    email: session.user.email || '',
-    confirmed: true,
-  } : null;
+  const user = session?.user
+    ? {
+        id: Number((session.user as any).id) || 0,
+        username: session.user.name || '',
+        email: session.user.email || '',
+        confirmed: true,
+      }
+    : null;
 
   const token = (session?.user as any)?.token || null;
 
   const login = useCallback(async (email: string, password: string) => {
-    const result = await nextAuthSignIn('credentials', { email, password, redirect: false });
+    const result = await nextAuthSignIn('credentials', {
+      email,
+      password,
+      redirect: false,
+    });
     if (result?.error) {
       throw new Error(result.error);
     }
   }, []);
 
-  const register = useCallback(async (username: string, email: string, password: string) => {
-    const API_URL = process.env.NEXT_PUBLIC_API_URL || '';
-    const response = await fetch(`${API_URL}/api/auth/local/register`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username, email, password }),
-    });
+  const register = useCallback(
+    async (username: string, email: string, password: string) => {
+      const API_URL = process.env.NEXT_PUBLIC_API_URL || '';
+      const response = await fetch(`${API_URL}/api/auth/local/register`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, email, password }),
+      });
 
-    const data = await response.json();
+      const data = await response.json();
 
-    if (!response.ok) {
-      const message = data?.error?.message || data?.message || 'Registration failed';
-      throw new Error(message);
-    }
+      if (!response.ok) {
+        const message =
+          data?.error?.message || data?.message || 'Registration failed';
+        throw new Error(message);
+      }
 
-    await nextAuthSignIn('credentials', { email, password, redirect: false });
-  }, []);
+      await nextAuthSignIn('credentials', { email, password, redirect: false });
+    },
+    []
+  );
 
   const logout = useCallback(() => {
     nextAuthSignOut({ redirect: false });
@@ -76,18 +99,29 @@ const AuthWrapper: React.FC<{ children: ReactNode }> = ({ children }) => {
   const clearError = useCallback(() => {}, []);
 
   return (
-    <AuthContext.Provider value={{ user, token, loading: status === 'loading', error: null, login, register, logout, clearError }}>
+    <AuthContext.Provider
+      value={{
+        user,
+        token,
+        loading: status === 'loading',
+        error: null,
+        login,
+        register,
+        logout,
+        clearError,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
 };
 
-export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+export const AuthProvider: React.FC<{ children: ReactNode }> = ({
+  children,
+}) => {
   return (
     <SessionProvider>
-      <AuthWrapper>
-        {children}
-      </AuthWrapper>
+      <AuthWrapper>{children}</AuthWrapper>
     </SessionProvider>
   );
 };

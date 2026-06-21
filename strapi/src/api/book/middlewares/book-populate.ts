@@ -10,7 +10,7 @@ export default (config: any, { strapi }: any) => {
       // TODO: populate only the thumbnail of the cover image
       cover: true,
       genres: {
-        fields: ["id", "name", "slug"],
+        fields: ['id', 'name', 'slug'],
       },
       seo: {
         populate: {

@@ -1,7 +1,8 @@
 'use server';
 
-import Link from 'next/link';
 import { IconChevronDown, IconChevronUp } from '@tabler/icons-react';
+import Link from 'next/link';
+
 import {
   Table,
   TableBody,
@@ -76,7 +77,10 @@ export async function ChaptersTable({
     },
   });
 
-  const totalChapters = allChapters.length > 0 ? (allChapters[0] as any).meta?.pagination?.total || 0 : 0;
+  const totalChapters =
+    allChapters.length > 0
+      ? (allChapters[0] as any).meta?.pagination?.total || 0
+      : 0;
   const totalPages = Math.ceil(totalChapters / pageSize);
 
   const sortToggleUrl = (newSort: 'asc' | 'desc') => {
@@ -136,7 +140,10 @@ export async function ChaptersTable({
             ))
           ) : (
             <TableRow>
-              <TableCell colSpan={3} className="text-center py-8 text-neutral-600">
+              <TableCell
+                colSpan={3}
+                className="text-center py-8 text-neutral-600"
+              >
                 No chapters available yet.
               </TableCell>
             </TableRow>
@@ -148,8 +155,8 @@ export async function ChaptersTable({
       {totalPages > 1 && (
         <div className="flex items-center justify-between">
           <p className="text-sm text-neutral-600">
-            Showing {start + 1} to {Math.min(start + pageSize, totalChapters)} of{' '}
-            {totalChapters} chapters
+            Showing {start + 1} to {Math.min(start + pageSize, totalChapters)}{' '}
+            of {totalChapters} chapters
           </p>
 
           <div className="flex gap-2">

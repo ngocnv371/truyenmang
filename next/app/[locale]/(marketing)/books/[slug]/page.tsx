@@ -3,14 +3,14 @@ import Image from 'next/image';
 import { notFound } from 'next/navigation';
 
 import ClientSlugHandler from '../../ClientSlugHandler';
-import { Container } from '@/components/container';
 import { ChaptersTable } from '@/components/chapters-table';
+import { Container } from '@/components/container';
 import DynamicZoneManager from '@/components/dynamic-zone/manager';
 import { Badge } from '@/components/ui/badge';
+import { StrapiMedia } from '@/components/ui/strapi-media';
 import { generateMetadataObject } from '@/lib/shared/metadata';
 import { fetchCollectionType } from '@/lib/strapi';
 import type { Book, LocaleSlugParamsProps } from '@/types/types';
-import { StrapiMedia } from '@/components/ui/strapi-media';
 
 export async function generateMetadata({
   params,
@@ -36,12 +36,12 @@ export async function generateMetadata({
 
   const seo = book.seo;
   const metadata = generateMetadataObject(seo);
-  
+
   // Set book title as page title if metaTitle is not provided
   if (!seo?.metaTitle) {
     metadata.title = book.title;
   }
-  
+
   return metadata;
 }
 
@@ -133,9 +133,7 @@ export default async function BookDetailPage({
               {/* Book Stats */}
               <div className="mt-6 space-y-4">
                 <div className="p-4 rounded-lg">
-                  <p className="text-sm font-semibold">
-                    STATUS
-                  </p>
+                  <p className="text-sm font-semibold">STATUS</p>
                   <Badge
                     className={`${statusColors[book.book_status]} capitalize mt-2`}
                   >
@@ -144,9 +142,7 @@ export default async function BookDetailPage({
                 </div>
 
                 <div className="p-4 rounded-lg">
-                  <p className="text-sm font-semibold">
-                    VIEWS
-                  </p>
+                  <p className="text-sm font-semibold">VIEWS</p>
                   <p className="text-2xl font-bold mt-2">
                     {(book.views || 0).toLocaleString()}
                   </p>
@@ -154,9 +150,7 @@ export default async function BookDetailPage({
 
                 {book.rating !== undefined && book.rating > 0 && (
                   <div className="p-4 rounded-lg">
-                    <p className="text-sm font-semibold">
-                      RATING
-                    </p>
+                    <p className="text-sm font-semibold">RATING</p>
                     <div className="flex items-center gap-2 mt-2">
                       <div className="flex text-yellow-400">
                         {[...Array(5)].map((_, i) => (

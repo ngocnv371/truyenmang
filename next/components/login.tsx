@@ -1,18 +1,18 @@
 'use client';
 
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { usePathname } from 'next/navigation';
 import {
   IconBrandGithubFilled,
   IconBrandGoogleFilled,
 } from '@tabler/icons-react';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import React, { useState } from 'react';
 
-import { useAuth } from '@/lib/auth-context';
 import { Container } from './container';
 import { Button } from './elements/button';
 import { Logo } from './logo';
+import { useAuth } from '@/lib/auth-context';
 
 export const Login = () => {
   const router = useRouter();
@@ -64,19 +64,32 @@ export const Login = () => {
           autoComplete="current-password"
           className="h-10 pl-4 w-full mb-4 rounded-md text-sm bg-charcoal border border-neutral-800 text-white placeholder-neutral-500 outline-none focus:outline-none active:outline-none focus:ring-2 focus:ring-neutral-800"
         />
-        <Button variant="muted" type="submit" className="w-full py-3" disabled={loading}>
-          <span className="text-sm">{loading ? 'Signing in...' : 'Sign in'}</span>
+        <Button
+          variant="muted"
+          type="submit"
+          className="w-full py-3"
+          disabled={loading}
+        >
+          <span className="text-sm">
+            {loading ? 'Signing in...' : 'Sign in'}
+          </span>
         </Button>
       </form>
 
       <Divider />
 
       <div className="flex flex-col sm:flex-row gap-4 w-full">
-        <button type="button" className="flex flex-1 justify-center space-x-2 items-center bg-white px-4 py-3 rounded-md text-black hover:bg-white/80 transition duration-200 shadow-[0px_1px_0px_0px_#00000040_inset]">
+        <button
+          type="button"
+          className="flex flex-1 justify-center space-x-2 items-center bg-white px-4 py-3 rounded-md text-black hover:bg-white/80 transition duration-200 shadow-[0px_1px_0px_0px_#00000040_inset]"
+        >
           <IconBrandGithubFilled className="h-4 w-4 text-black" />
           <span className="text-sm">Login with GitHub</span>
         </button>
-        <button type="button" className="flex flex-1 justify-center space-x-2 items-center bg-white px-4 py-3 rounded-md text-black hover:bg-white/80 transition duration-200 shadow-[0px_1px_0px_0px_#00000040_inset]">
+        <button
+          type="button"
+          className="flex flex-1 justify-center space-x-2 items-center bg-white px-4 py-3 rounded-md text-black hover:bg-white/80 transition duration-200 shadow-[0px_1px_0px_0px_#00000040_inset]"
+        >
           <IconBrandGoogleFilled className="h-4 w-4 text-black" />
           <span className="text-sm">Login with Google</span>
         </button>
@@ -84,7 +97,10 @@ export const Login = () => {
 
       <p className="mt-8 text-sm text-neutral-400">
         Don't have an account?{' '}
-        <Link href={`/${locale}/sign-up`} className="text-white hover:underline">
+        <Link
+          href={`/${locale}/sign-up`}
+          className="text-white hover:underline"
+        >
           Sign up
         </Link>
       </p>

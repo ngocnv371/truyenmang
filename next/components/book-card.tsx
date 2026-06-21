@@ -1,10 +1,10 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { useSlugContext } from '@/app/context/SlugContext';
-import { Book } from '@/types/types';
 import { Badge } from './ui/badge';
 import { StrapiMedia } from './ui/strapi-media';
+import { useSlugContext } from '@/app/context/SlugContext';
+import { Book } from '@/types/types';
 
 interface BookCardProps {
   book: Book;
@@ -18,7 +18,7 @@ const statusColors = {
 };
 
 export default function BookCard({ book }: BookCardProps) {
-  const href = `/books/${ book.slug}`;
+  const href = `/books/${book.slug}`;
 
   return (
     <Link href={href}>
@@ -81,10 +81,7 @@ export default function BookCard({ book }: BookCardProps) {
           {book.genres && book.genres.length > 0 && (
             <div className="flex gap-1 flex-wrap mt-2">
               {book.genres.slice(0, 2).map((genre, index) => (
-                <span
-                  key={index}
-                  className="text-xs px-2 py-1 rounded"
-                >
+                <span key={index} className="text-xs px-2 py-1 rounded">
                   {genre.name}
                 </span>
               ))}

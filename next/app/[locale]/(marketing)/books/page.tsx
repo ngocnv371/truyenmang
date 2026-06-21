@@ -26,7 +26,7 @@ export async function generateMetadata({
 
 export default async function Books({ params }: LocaleParamsProps) {
   const { locale } = await params;
-  
+
   const pageData = await fetchSingleType('books-page', {
     locale: locale,
   });
@@ -45,12 +45,12 @@ export default async function Books({ params }: LocaleParamsProps) {
             {pageData.heading || 'Books'}
           </Heading>
           <Subheading className="max-w-3xl mx-auto">
-            {pageData.sub_heading || 'Discover amazing novels'}
+            {pageData.sub_heading || 'Discover amazing books'}
           </Subheading>
         </div>
 
         <div className="w-full py-12">
-          <h2 className="text-2xl font-bold mb-6">All Novels</h2>
+          <h2 className="text-2xl font-bold mb-6">All Books</h2>
           <BookItems books={books} columns={4} />
         </div>
       </Container>

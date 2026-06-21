@@ -5,7 +5,7 @@ info:
 
 http:
   method: GET
-  url: "{{api_base}}/api/chapters?filters.book.slug=jane-and-the-blue-egg"
+  url: '{{api_base}}/api/chapters?filters.book.slug=jane-and-the-blue-egg'
   params:
     - name: filters.book.slug
       value: jane-and-the-blue-egg

@@ -94,6 +94,12 @@ export const DesktopNavbar = ({
 
         {user ? (
           <>
+            <Link
+              href={`/${locale}/studio`}
+              className="text-sm text-white hover:text-neutral-300 transition-colors px-2"
+            >
+              Studio
+            </Link>
             <span className="text-sm text-white px-2">{user.email}</span>
             <Button variant="simple" onClick={() => logout()}>
               <span className="text-sm">Logout</span>
@@ -101,11 +107,7 @@ export const DesktopNavbar = ({
           </>
         ) : (
           <>
-            <Button
-              variant="primary"
-              as={Link}
-              href={`/${locale}/sign-in`}
-            >
+            <Button variant="primary" as={Link} href={`/${locale}/sign-in`}>
               Sign in
             </Button>
           </>

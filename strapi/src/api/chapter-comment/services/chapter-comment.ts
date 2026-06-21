@@ -1,7 +1,8 @@
 /**
  * chapter-comment service
  */
-
 import { factories } from '@strapi/strapi';
 
-export default factories.createCoreService('api::chapter-comment.chapter-comment');
+export default factories.createCoreService(
+  'api::chapter-comment.chapter-comment'
+);

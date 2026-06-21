@@ -5,13 +5,13 @@ info:
 
 http:
   method: GET
-  url: "{{api_base}}/api/chapters/?filters[slug][$eq]=chapter-1-what-s-that-egg&populate[book]=true"
+  url: '{{api_base}}/api/chapters/?filters[slug][$eq]=chapter-1-what-s-that-egg&populate[book]=true'
   params:
     - name: filters[slug][$eq]
       value: chapter-1-what-s-that-egg
       type: query
     - name: populate[book]
-      value: "true"
+      value: 'true'
       type: query
   auth: inherit
 

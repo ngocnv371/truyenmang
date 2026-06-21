@@ -2,6 +2,7 @@ import { strapi } from '@strapi/client';
 import type { API, Config } from '@strapi/client';
 import { cacheLife, cacheTag, revalidateTag } from 'next/cache';
 import { draftMode } from 'next/headers';
+
 import { API_URL } from '../utils';
 
 export class StrapiError extends Error {
@@ -227,6 +228,41 @@ export async function fetchDocument<T = API.Document>(
   } catch (error) {
     throw new StrapiError(
       `Failed to fetch document "${documentId}" from "${collectionName}"`,
+      collectionName,
+      error
+    );
+  }
+}
+
+/**
+ * Creates a new document in a collection type.
+ * The @strapi/client .create() method throws on failure rather than returning an error object.
+ *
+ * @throws {StrapiError} When the creation fails
+ */
+export async function createEntry<T = API.Document>(
+  collectionName: string,
+  data: Record<string, unknown>,
+  config?: Omit<Config, 'baseURL'>
+): Promise<T> {
+  try {
+    const result = await createClient(config)
+      .collection(collectionName)
+      .create(data);
+
+    // Invalidate cache tags so Next.js fetches fresh data on next request
+    revalidateContent(
+      'document',
+      collectionName,
+      (result.data as API.Document).id
+    );
+    revalidateContent('collection', collectionName);
+
+    return result.data as T;
+  } catch (error) {
+    if (error instanceof StrapiError) throw error;
+    throw new StrapiError(
+      `Failed to create document in "${collectionName}"`,
       collectionName,
       error
     );

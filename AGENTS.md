@@ -52,6 +52,7 @@ yarn fix            # reformat everything
 ## Architecture notes
 
 ### Frontend (next/)
+
 - **Strapi client:** `@strapi/client` v1.6.0, used via `next/lib/strapi/index.ts`. Entry point for all CMS fetches (`fetchCollectionType`, etc.).
 - **Pages:** Internationalized under `app/[locale]/(marketing)/`. Homepage filters pages by `{ slug: 'homepage', locale }`.
 - **Book/chapter routes:** `books/[slug]/` (book detail) and `books/[slug]/[chapterSlug]/` (reading page).
@@ -60,12 +61,14 @@ yarn fix            # reformat everything
 - **Build-time redirects:** Fetches from Strapi `/api/redirections` at build time. Requires `NEXT_PUBLIC_API_URL`.
 
 ### Backend (strapi/)
+
 - **Content types:** book, chapter, article, page, product, blog-page, books-page, category, genre, faq, global, plan, redirection, testimonial, logo, book-comment, chapter-comment, product-page. Each has controller/service/route/middleware in `src/api/`.
 - **Components:** Organized under `src/components/` — shared (seo, link, button), dynamic-zone (hero, features, testimonials, etc.), items, global (navbar, footer).
 - **Admin customization:** Custom admin app at `strapi/src/admin/app.tsx`.
 - **Post-install hook:** `scripts/updateUuid.js` runs after `yarn install`.
 
 ### i18n
+
 Two locales: `en` (default) and `vi`. Config in `next/i18n.config.ts`. Pages use `[locale]` route group.
 
 ## Gotchas

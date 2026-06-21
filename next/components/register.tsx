@@ -1,18 +1,18 @@
 'use client';
 
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { usePathname } from 'next/navigation';
 import {
   IconBrandGithubFilled,
   IconBrandGoogleFilled,
 } from '@tabler/icons-react';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import React, { useState } from 'react';
 
-import { useAuth } from '@/lib/auth-context';
 import { Container } from './container';
 import { Button } from './elements/button';
 import { Logo } from './logo';
+import { useAuth } from '@/lib/auth-context';
 
 export const Register = () => {
   const router = useRouter();
@@ -72,14 +72,24 @@ export const Register = () => {
           minLength={8}
           className="h-10 pl-4 w-full mb-4 rounded-md text-sm bg-charcoal border border-neutral-800 text-white placeholder-neutral-500 outline-none focus:outline-none active:outline-none focus:ring-2 focus:ring-neutral-800"
         />
-        <Button variant="muted" type="submit" className="w-full py-3" disabled={loading}>
-          <span className="text-sm">{loading ? 'Signing up...' : 'Sign up'}</span>
+        <Button
+          variant="muted"
+          type="submit"
+          className="w-full py-3"
+          disabled={loading}
+        >
+          <span className="text-sm">
+            {loading ? 'Signing up...' : 'Sign up'}
+          </span>
         </Button>
       </form>
 
       <p className="mt-8 text-sm text-neutral-400">
         Already have an account?{' '}
-        <Link href={`/${locale}/sign-in`} className="text-white hover:underline">
+        <Link
+          href={`/${locale}/sign-in`}
+          className="text-white hover:underline"
+        >
           Sign in
         </Link>
       </p>
