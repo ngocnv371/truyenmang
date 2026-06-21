@@ -1,23 +1,40 @@
-'use client';
+"use client"
 
-import { FiSun, FiMoon } from 'react-icons/fi';
+import * as React from "react"
+import { Moon, Sun } from "lucide-react"
+import { useTheme } from "next-themes"
 
-import { useTheme } from '@/context/theme-context';
+import { Button } from "@/components/ui/button"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 
 export function ThemeSwitcher() {
-  const { theme, toggleTheme } = useTheme();
+  const { setTheme } = useTheme()
 
   return (
-    <button
-      onClick={toggleTheme}
-      className="flex cursor-pointer items-center justify-center rounded-md p-1.5 text-white hover:bg-neutral-800 hover:text-white/80 transition duration-200"
-      aria-label="Toggle theme"
-    >
-      {theme === 'dark' ? (
-        <FiSun className="h-4 w-4" />
-      ) : (
-        <FiMoon className="h-4 w-4" />
-      )}
-    </button>
-  );
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="outline" size="icon">
+          <Sun className="h-[1.2rem] w-[1.2rem] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
+          <Moon className="absolute h-[1.2rem] w-[1.2rem] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
+          <span className="sr-only">Toggle theme</span>
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
+        <DropdownMenuItem onClick={() => setTheme("light")}>
+          Light
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setTheme("dark")}>
+          Dark
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setTheme("system")}>
+          System
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  )
 }
