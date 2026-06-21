@@ -66,12 +66,19 @@ export interface Book {
   slug: string;
   synopsis: string;
   description?: string;
-  cover: Image;
+  cover: {
+    url: string;
+    formats?: {
+      thumbnail?: {
+        url: string;
+      };
+    };
+  };
   genres: Genre[];
   rating?: number;
   author: string;
   views?: number;
-  status: 'ongoing' | 'completed' | 'hiatus' | 'cancelled';
+  book_status: 'ongoing' | 'completed' | 'hiatus' | 'cancelled';
   chapters?: any[];
   dynamic_zone: any[];
   seo?: any;

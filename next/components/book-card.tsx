@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useSlugContext } from '@/app/context/SlugContext';
 import { Book } from '@/types/types';
 import { Badge } from './ui/badge';
+import { StrapiMedia } from './ui/strapi-media';
 
 interface BookCardProps {
   book: Book;
@@ -21,11 +22,11 @@ export default function BookCard({ book }: BookCardProps) {
 
   return (
     <Link href={href}>
-      <article className="group overflow-hidden rounded-lg border border-neutral-200 bg-white shadow-sm transition-all duration-300 hover:shadow-lg hover:border-neutral-300">
+      <article className="group overflow-hidden rounded-lg border shadow-sm transition-all duration-300 hover:shadow-lg hover:border-neutral-300">
         {/* Cover Image */}
         <div className="relative h-48 w-full overflow-hidden bg-neutral-100">
           {book.cover?.url ? (
-            <Image
+            <StrapiMedia
               src={book.cover.url}
               alt={book.title}
               fill
@@ -52,9 +53,9 @@ export default function BookCard({ book }: BookCardProps) {
           {/* Status Badge */}
           <div className="absolute top-2 right-2">
             <Badge
-              className={`${statusColors[book.status]} capitalize text-xs font-semibold`}
+              className={`${statusColors[book.book_status]} capitalize text-xs font-semibold`}
             >
-              {book.status}
+              {book.book_status}
             </Badge>
           </div>
 
@@ -69,12 +70,12 @@ export default function BookCard({ book }: BookCardProps) {
         {/* Content */}
         <div className="p-4">
           {/* Title */}
-          <h3 className="font-bold text-lg line-clamp-2 group-hover:text-blue-600 transition-colors">
+          <h3 className="font-bold text-lg line-clamp-2 transition-colors">
             {book.title}
           </h3>
 
           {/* Author */}
-          <p className="text-sm text-neutral-600 mt-1">by {book.author}</p>
+          <p className="text-sm mt-1">by {book.author}</p>
 
           {/* Genres */}
           {book.genres && book.genres.length > 0 && (
@@ -82,13 +83,13 @@ export default function BookCard({ book }: BookCardProps) {
               {book.genres.slice(0, 2).map((genre, index) => (
                 <span
                   key={index}
-                  className="text-xs bg-neutral-100 text-neutral-700 px-2 py-1 rounded"
+                  className="text-xs px-2 py-1 rounded"
                 >
                   {genre.name}
                 </span>
               ))}
               {book.genres.length > 2 && (
-                <span className="text-xs bg-neutral-100 text-neutral-700 px-2 py-1 rounded">
+                <span className="text-xs px-2 py-1 rounded">
                   +{book.genres.length - 2}
                 </span>
               )}

@@ -1,0 +1,19 @@
+info:
+  name: get single book
+  type: http
+  seq: 1
+
+http:
+  method: GET
+  url: "{{api_base}}/api/books?filters[slug]=jane-and-the-blue-egg"
+  params:
+    - name: filters[slug]
+      value: jane-and-the-blue-egg
+      type: query
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

@@ -10,6 +10,7 @@ import { Badge } from '@/components/ui/badge';
 import { generateMetadataObject } from '@/lib/shared/metadata';
 import { fetchCollectionType } from '@/lib/strapi';
 import type { Book, LocaleSlugParamsProps } from '@/types/types';
+import { StrapiMedia } from '@/components/ui/strapi-media';
 
 export async function generateMetadata({
   params,
@@ -103,7 +104,7 @@ export default async function BookDetailPage({
             <div className="sticky top-20">
               <div className="relative aspect-[3/4] rounded-lg overflow-hidden shadow-xl">
                 {book.cover?.url ? (
-                  <Image
+                  <StrapiMedia
                     src={book.cover.url}
                     alt={book.title}
                     fill
@@ -131,29 +132,29 @@ export default async function BookDetailPage({
 
               {/* Book Stats */}
               <div className="mt-6 space-y-4">
-                <div className="bg-neutral-50 p-4 rounded-lg">
-                  <p className="text-sm text-neutral-600 font-semibold">
+                <div className="p-4 rounded-lg">
+                  <p className="text-sm font-semibold">
                     STATUS
                   </p>
                   <Badge
-                    className={`${statusColors[book.status]} capitalize mt-2`}
+                    className={`${statusColors[book.book_status]} capitalize mt-2`}
                   >
-                    {book.status}
+                    {book.book_status}
                   </Badge>
                 </div>
 
-                <div className="bg-neutral-50 p-4 rounded-lg">
-                  <p className="text-sm text-neutral-600 font-semibold">
+                <div className="p-4 rounded-lg">
+                  <p className="text-sm font-semibold">
                     VIEWS
                   </p>
-                  <p className="text-2xl font-bold text-neutral-900 mt-2">
+                  <p className="text-2xl font-bold mt-2">
                     {(book.views || 0).toLocaleString()}
                   </p>
                 </div>
 
                 {book.rating !== undefined && book.rating > 0 && (
-                  <div className="bg-neutral-50 p-4 rounded-lg">
-                    <p className="text-sm text-neutral-600 font-semibold">
+                  <div className="p-4 rounded-lg">
+                    <p className="text-sm font-semibold">
                       RATING
                     </p>
                     <div className="flex items-center gap-2 mt-2">
