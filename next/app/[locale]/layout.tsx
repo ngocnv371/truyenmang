@@ -10,6 +10,7 @@ import { DraftModeBanner } from '@/components/draft-mode-banner';
 import { Footer } from '@/components/footer';
 import { Navbar } from '@/components/navbar';
 import { AIToast } from '@/components/toast';
+import { AuthProvider } from '@/lib/auth-context';
 import { CartProvider } from '@/context/cart-context';
 import { generateMetadataObject } from '@/lib/shared/metadata';
 import { fetchSingleType } from '@/lib/strapi';
@@ -46,19 +47,21 @@ export default async function LocaleLayout({
   return (
     <ViewTransitions>
       <CartProvider>
-        <div
-          className={cn(
-            inter.className,
-            'bg-charcoal antialiased h-full w-full'
-          )}
-        >
-          {isDemo && <Banner />}
-          <Navbar data={pageData.navbar} locale={locale} hasBanner={isDemo} />
-          {children}
-          <Footer data={pageData.footer} locale={locale} />
-          <AIToast />
-          {isDraftMode && <DraftModeBanner />}
-        </div>
+        <AuthProvider>
+          <div
+            className={cn(
+              inter.className,
+              'bg-charcoal antialiased h-full w-full'
+            )}
+          >
+            {isDemo && <Banner />}
+            <Navbar data={pageData.navbar} locale={locale} hasBanner={isDemo} />
+            {children}
+            <Footer data={pageData.footer} locale={locale} />
+            <AIToast />
+            {isDraftMode && <DraftModeBanner />}
+          </div>
+        </AuthProvider>
       </CartProvider>
     </ViewTransitions>
   );

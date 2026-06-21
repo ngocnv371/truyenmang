@@ -9,6 +9,7 @@ import { IoIosClose } from 'react-icons/io';
 import { LocaleSwitcher } from '../locale-switcher';
 import { Button } from '@/components/elements/button';
 import { Logo } from '@/components/logo';
+import { useAuth } from '@/lib/auth-context';
 import { cn } from '@/lib/utils';
 
 type Props = {
@@ -37,6 +38,7 @@ export const MobileNavbar = ({
   const { scrollY } = useScroll();
 
   const [showBackground, setShowBackground] = useState(false);
+  const { user, logout } = useAuth();
 
   useMotionValueEvent(scrollY, 'change', (value) => {
     if (value > 100) {
@@ -109,18 +111,24 @@ export const MobileNavbar = ({
             ))}
           </div>
           <div className="flex flex-row w-full items-start gap-2.5  px-8 py-4 ">
-            {rightNavbarItems.map((item, index) => (
-              <Button
-                key={item.text}
-                variant={
-                  index === rightNavbarItems.length - 1 ? 'primary' : 'simple'
-                }
-                as={Link}
-                href={`/${locale}${item.URL}`}
-              >
-                {item.text}
-              </Button>
-            ))}
+            {user ? (
+              <>
+                <span className="text-sm text-white px-4">{user.email}</span>
+                <Button variant="muted" onClick={() => logout()}>
+                  <span className="text-sm">Logout</span>
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button
+                  variant="primary"
+                  as={Link}
+                  href={`/${locale}/sign-in`}
+                >
+                  Sign in
+                </Button>
+              </>
+            )}
           </div>
         </div>
       )}

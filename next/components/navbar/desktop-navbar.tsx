@@ -13,6 +13,7 @@ import { LocaleSwitcher } from '../locale-switcher';
 import { NavbarItem } from './navbar-item';
 import { Button } from '@/components/elements/button';
 import { Logo } from '@/components/logo';
+import { useAuth } from '@/lib/auth-context';
 import { cn } from '@/lib/utils';
 
 type Props = {
@@ -39,6 +40,7 @@ export const DesktopNavbar = ({
   const { scrollY } = useScroll();
 
   const [showBackground, setShowBackground] = useState(false);
+  const { user, logout } = useAuth();
 
   useMotionValueEvent(scrollY, 'change', (value) => {
     if (value > 100) {
@@ -90,18 +92,24 @@ export const DesktopNavbar = ({
       <div className="flex space-x-2 items-center">
         <LocaleSwitcher currentLocale={locale} />
 
-        {rightNavbarItems.map((item, index) => (
-          <Button
-            key={item.text}
-            variant={
-              index === rightNavbarItems.length - 1 ? 'primary' : 'simple'
-            }
-            as={Link}
-            href={`/${locale}${item.URL}`}
-          >
-            {item.text}
-          </Button>
-        ))}
+        {user ? (
+          <>
+            <span className="text-sm text-white px-2">{user.email}</span>
+            <Button variant="simple" onClick={() => logout()}>
+              <span className="text-sm">Logout</span>
+            </Button>
+          </>
+        ) : (
+          <>
+            <Button
+              variant="primary"
+              as={Link}
+              href={`/${locale}/sign-in`}
+            >
+              Sign in
+            </Button>
+          </>
+        )}
       </div>
     </motion.div>
   );

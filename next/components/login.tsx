@@ -13,9 +13,8 @@ import { Container } from './container';
 import { Button } from './elements/button';
 import { Logo } from './logo';
 
-export const Register = () => {
-  const { register: registerUser, loading, error, clearError } = useAuth();
-  const [username, setUsername] = useState('');
+export const Login = () => {
+  const { login: loginUser, loading, error, clearError } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const pathname = usePathname();
@@ -24,7 +23,7 @@ export const Register = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await registerUser(username, email, password);
+      await loginUser(email, password);
       window.location.href = '/';
     } catch {
       // error is handled by context
@@ -35,7 +34,7 @@ export const Register = () => {
     <Container className="h-screen max-w-lg mx-auto flex flex-col items-center justify-center">
       <Logo />
       <h1 className="text-xl md:text-4xl font-bold my-4">
-        Sign up for LaunchPad
+        Sign in to LaunchPad
       </h1>
 
       {error && (
@@ -45,14 +44,6 @@ export const Register = () => {
       )}
 
       <form onSubmit={handleSubmit} className="w-full my-4">
-        <input
-          type="text"
-          placeholder="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          required
-          className="h-10 pl-4 w-full mb-4 rounded-md text-sm bg-charcoal border border-neutral-800 text-white placeholder-neutral-500 outline-none focus:outline-none active:outline-none focus:ring-2 focus:ring-neutral-800"
-        />
         <input
           type="email"
           placeholder="Email Address"
@@ -67,18 +58,30 @@ export const Register = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
-          minLength={8}
           className="h-10 pl-4 w-full mb-4 rounded-md text-sm bg-charcoal border border-neutral-800 text-white placeholder-neutral-500 outline-none focus:outline-none active:outline-none focus:ring-2 focus:ring-neutral-800"
         />
         <Button variant="muted" type="submit" className="w-full py-3" disabled={loading}>
-          <span className="text-sm">{loading ? 'Signing up...' : 'Sign up'}</span>
+          <span className="text-sm">{loading ? 'Signing in...' : 'Sign in'}</span>
         </Button>
       </form>
 
+      <Divider />
+
+      <div className="flex flex-col sm:flex-row gap-4 w-full">
+        <button type="button" className="flex flex-1 justify-center space-x-2 items-center bg-white px-4 py-3 rounded-md text-black hover:bg-white/80 transition duration-200 shadow-[0px_1px_0px_0px_#00000040_inset]">
+          <IconBrandGithubFilled className="h-4 w-4 text-black" />
+          <span className="text-sm">Login with GitHub</span>
+        </button>
+        <button type="button" className="flex flex-1 justify-center space-x-2 items-center bg-white px-4 py-3 rounded-md text-black hover:bg-white/80 transition duration-200 shadow-[0px_1px_0px_0px_#00000040_inset]">
+          <IconBrandGoogleFilled className="h-4 w-4 text-black" />
+          <span className="text-sm">Login with Google</span>
+        </button>
+      </div>
+
       <p className="mt-8 text-sm text-neutral-400">
-        Already have an account?{' '}
-        <Link href={`/${locale}/sign-in`} className="text-white hover:underline">
-          Sign in
+        Don't have an account?{' '}
+        <Link href={`/${locale}/sign-up`} className="text-white hover:underline">
+          Sign up
         </Link>
       </p>
     </Container>
